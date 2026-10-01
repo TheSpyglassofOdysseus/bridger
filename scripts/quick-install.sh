@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-BRIDGER_REF="${BRIDGER_REF:-v0.2.0}"
+BRIDGER_REF="${BRIDGER_REF:-v0.2.1}"
 BRIDGER_REPO="${BRIDGER_REPO:-https://github.com/TheSpyglassofOdysseus/bridger.git}"
 BRIDGER_SOURCE_DIR="${BRIDGER_SOURCE_DIR:-}"
 BRIDGER_INSTALL_DIR="${BRIDGER_INSTALL_DIR:-/opt/bridger}"
@@ -11,6 +11,7 @@ BRIDGER_HOME="${BRIDGER_HOME:-/home/bridger}"
 BRIDGER_USER="${BRIDGER_USER:-bridger}"
 BRIDGER_GROUP="${BRIDGER_GROUP:-bridger}"
 BRIDGER_SKIP_TAILSCALE="${BRIDGER_SKIP_TAILSCALE:-0}"
+BRIDGER_SKIP_AI_CONNECTION="${BRIDGER_SKIP_AI_CONNECTION:-0}"
 BRIDGER_REINSTALL="${BRIDGER_REINSTALL:-0}"
 BRIDGER_NONINTERACTIVE="${BRIDGER_NONINTERACTIVE:-0}"
 
@@ -22,7 +23,7 @@ die() { printf '  ✗ %s\n' "$*" >&2; exit 1; }
 need_root() {
   if [[ "${EUID}" -ne 0 ]]; then
     command -v sudo >/dev/null 2>&1 || die "Run as root or install sudo."
-    exec sudo --preserve-env=BRIDGER_REF,BRIDGER_REPO,BRIDGER_SOURCE_DIR,BRIDGER_INSTALL_DIR,BRIDGER_RUNTIME_DIR,BRIDGER_ENV_DIR,BRIDGER_HOME,BRIDGER_USER,BRIDGER_GROUP,BRIDGER_SKIP_TAILSCALE,BRIDGER_REINSTALL,BRIDGER_NONINTERACTIVE bash "$0" "$@"
+    exec sudo --preserve-env=BRIDGER_REF,BRIDGER_REPO,BRIDGER_SOURCE_DIR,BRIDGER_INSTALL_DIR,BRIDGER_RUNTIME_DIR,BRIDGER_ENV_DIR,BRIDGER_HOME,BRIDGER_USER,BRIDGER_GROUP,BRIDGER_SKIP_TAILSCALE,BRIDGER_SKIP_AI_CONNECTION,BRIDGER_REINSTALL,BRIDGER_NONINTERACTIVE bash "$0" "$@"
   fi
 }
 
@@ -132,7 +133,7 @@ stage_source() {
     tar -C "$BRIDGER_SOURCE_DIR" --exclude=.git --exclude=node_modules --exclude=selfhosted/node_modules -cf - . | tar -C "$app" -xf -
     ok "Using local source: $BRIDGER_SOURCE_DIR"
   else
-    git clone --quiet --depth 1 --branch "$BRIDGER_REF" "$BRIDGER_REPO" "$app"
+    git -c advice.detachedHead=false clone --quiet --depth 1 --branch "$BRIDGER_REF" "$BRIDGER_REPO" "$app"
     rm -rf "$app/.git"
     ok "Fetched $BRIDGER_REF from public repository"
   fi
@@ -280,6 +281,24 @@ install_tailscale() {
   fi
 }
 
+offer_ai_connection() {
+  [[ "$BRIDGER_SKIP_AI_CONNECTION" == "1" ]] && { warn "Skipping AI connection setup by request."; return; }
+  if [[ "$BRIDGER_NONINTERACTIVE" == "1" ]]; then
+    warn "AI connection setup is interactive. Run later: sudo $BRIDGER_INSTALL_DIR/scripts/setup-openai-tunnel.sh"
+    return
+  fi
+
+  printf '\nAI connection\n'
+  printf '%s\n' '-------------'
+  printf 'If you use ChatGPT/OpenAI, Bridger can now guide you through Secure MCP Tunnel setup.\n'
+  printf "%s\n" "If you use another MCP-capable client, choose no and follow that client's connection guide."
+  if confirm "Connect this Bridger to ChatGPT/OpenAI now?"; then
+    bash "$BRIDGER_INSTALL_DIR/scripts/setup-openai-tunnel.sh"
+  else
+    warn "AI connection deferred. Run setup-openai-tunnel.sh later for ChatGPT/OpenAI."
+  fi
+}
+
 write_handoff() {
   log "Writing safe AI handoff"
   local handoff="$BRIDGER_HOME/BRIDGER-HANDOFF.txt"
@@ -387,6 +406,7 @@ main() {
   install_services
   verify_loopback
   install_tailscale
+  offer_ai_connection
   write_handoff
   finish
 }

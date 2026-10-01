@@ -68,6 +68,8 @@ install_tunnel_client() {
 
   install -d -o root -g root -m 0755 "$BRIDGER_TUNNEL_DIR"
   install -o root -g root -m 0755 "$tmp/unpacked/tunnel-client" "$BRIDGER_TUNNEL_DIR/tunnel-client"
+  [[ -f "$tmp/unpacked/cloudflared" ]] || die "OpenAI tunnel archive is missing bundled cloudflared."
+  install -o root -g root -m 0755 "$tmp/unpacked/cloudflared" "$BRIDGER_TUNNEL_DIR/cloudflared"
   [[ -f "$tmp/unpacked/LICENSE" ]] && install -o root -g root -m 0644 "$tmp/unpacked/LICENSE" "$BRIDGER_TUNNEL_DIR/LICENSE"
   [[ -f "$tmp/unpacked/NOTICE" ]] && install -o root -g root -m 0644 "$tmp/unpacked/NOTICE" "$BRIDGER_TUNNEL_DIR/NOTICE"
 
@@ -130,7 +132,7 @@ EOF
     read -r -p "Tunnel ID (tunnel_...): " tunnel_id
   fi
 
-  [[ "$tunnel_id" =~ ^tunnel_[0-9a-f]{32}$ ]] || die "Tunnel ID must be tunnel_ followed by 32 lowercase hexadecimal characters."
+  [[ "$tunnel_id" =~ ^tunnel_[A-Za-z0-9_-]{8,}$ ]] || die "Tunnel ID must start with tunnel_. OpenAI's tunnel doctor will validate the actual ID."
 
   if [[ -n "${BRIDGER_TUNNEL_API_KEY:-}" ]]; then
     api_key="$BRIDGER_TUNNEL_API_KEY"

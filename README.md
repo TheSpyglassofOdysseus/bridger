@@ -4,7 +4,7 @@
 
 ## New here? Build your own personal AI server
 
-If you want the shortest path, start with [`docs/EASY-SETUP.md`](docs/EASY-SETUP.md): existing ARM64 Linux server → one installer → Tailscale approval → Bridger handoff → connect your AI. If you want to understand every layer, use [`START_HERE.md`](START_HERE.md). The repository also includes a self-contained static landing page in [`site/index.html`](site/index.html).
+If you want the shortest path, start with [`docs/EASY-SETUP.md`](docs/EASY-SETUP.md): existing ARM64 Linux server → one installer → Tailscale approval → OpenAI tunnel wizard (for ChatGPT) → plugin/app connection → start building. If you want to understand every layer, use [`START_HERE.md`](START_HERE.md). The repository also includes a self-contained static landing page in [`site/index.html`](site/index.html).
 
 The starter path combines a Linux VM (Oracle Cloud is the reference path), Tailscale private networking, optional Cloudflare domain/DNS for intentionally public web services, Git/GitHub for source and recovery, and Bridger as the controlled AI-to-host execution boundary.
 

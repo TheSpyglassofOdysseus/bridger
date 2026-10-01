@@ -173,7 +173,8 @@ textarea{
     <div class="wrap">
       <div class="kicker">The easy path</div>
       <h2 class="section-title">Five steps. No infrastructure degree required.</h2>
-      <p class="section-copy">For ChatGPT, the private path is: your server + Bridger MCP + OpenAI Secure MCP Tunnel + your own plugin connection. ChatGPT/plugin access varies by plan and workspace, so check that your account can create a custom MCP connection before you start.</p>
+      <p class="section-copy">For ChatGPT, the private path is: your server + Bridger MCP + OpenAI Secure MCP Tunnel + your own plugin connection.</p>
+      <div class="card" style="margin-top:22px"><h3>Before step 1: check compatibility</h3><p>ChatGPT’s full write-capable MCP support is currently available to Business and Enterprise/Edu workspaces; Pro currently supports read/fetch MCP only. If your ChatGPT setup does not support the connection you need, find that out before provisioning a server. <a href="https://help.openai.com/en/articles/12584461-developer-mode-and-full-mcp-connectors-in-chatgpt" target="_blank" rel="noopener noreferrer">Check current OpenAI support ↗</a></p></div>
       <div class="grid5">
         <article class="card"><div class="n">01</div><h3>Get a server</h3><p>Use eligible Oracle free ARM compute when available, or another ARM64 Linux server you control.</p></article>
         <article class="card"><div class="n">02</div><h3>Run the installer</h3><p>One script installs Bridger, its private Node runtime, Tailscale, credentials, services, and health checks.</p></article>
@@ -192,7 +193,7 @@ textarea{
 
       <div class="prompt-card">
         <div class="prompt-head">
-          <div><strong>BRIDGER ONE-SHOT</strong> <span>v0.2 easy setup</span></div>
+          <div><strong>BRIDGER ONE-SHOT</strong> <span>easy setup</span></div>
           <button class="copy" data-copy-prompt>Copy prompt</button>
         </div>
         <details class="prompt-details">

@@ -5,13 +5,15 @@ ENV_FILE="${BRIDGER_ENV_FILE:-/etc/bridger/bridger.env}"
 INSTALL_DIR="${BRIDGER_INSTALL_DIR:-/opt/bridger}"
 RUNTIME_DIR="${BRIDGER_RUNTIME_DIR:-/opt/bridger-runtime}"
 
-line() { printf '%-24s %s\n' "$1" "$2"; }
+line() { printf '%-30s %s\n' "$1" "$2"; }
 
 echo "Bridger status"
 echo "=============="
 
 ref="unknown"
-[[ -r "$INSTALL_DIR/.bridger-install-ref" ]] && ref="$(cat "$INSTALL_DIR/.bridger-install-ref")"
+if [[ -r "$INSTALL_DIR/.bridger-install-ref" ]]; then
+  ref="$(cat "$INSTALL_DIR/.bridger-install-ref")"
+fi
 line "Installed source" "$ref"
 
 if [[ -x "$RUNTIME_DIR/node/bin/node" ]]; then
@@ -28,15 +30,15 @@ done
 echo
 echo "Listeners"
 echo "---------"
-listeners="$(ss -lnt 2>/dev/null | awk '$4 ~ /:(18877|18879)$/ {print $4}' || true)"
+listeners="$(ss -lntH 2>/dev/null | grep -E ':(18877|18879)([[:space:]]|$)' || true)"
 if [[ -n "$listeners" ]]; then
-  printf '%s\n' "$listeners"
+  awk '{print $4}' <<<"$listeners"
 else
   echo "No Bridger listeners detected."
 fi
 
-if grep -Eq '(^|[[:space:]])(0\.0\.0\.0|\[::\]|\*):(18877|18879)' <<<"$listeners"; then
-  echo "WARNING: a Bridger listener appears wildcard-bound." >&2
+if grep -Eq '(0\.0\.0\.0|\[::\]|\*):(18877|18879)([[:space:]]|$)' <<<"$listeners"; then
+  echo "Boundary: WARNING — a Bridger listener appears wildcard-bound." >&2
 else
   echo "Boundary: loopback-only for detected Bridger ports."
 fi
@@ -50,7 +52,11 @@ if [[ "$code" == "401" ]]; then
 else
   echo "Unauthenticated facade request: HTTP ${code:-unreachable}"
 fi
-[[ -s "$ENV_FILE" ]] && echo "Credential file: present (value not shown)" || echo "Credential file: missing"
+if [[ -s "$ENV_FILE" ]]; then
+  echo "Credential file: present (value not shown)"
+else
+  echo "Credential file: missing"
+fi
 
 echo
 echo "Tailscale"
@@ -74,18 +80,22 @@ echo
 echo "OpenAI tunnel"
 echo "-------------"
 tunnel_state="$(systemctl is-active bridger-openai-tunnel.service 2>/dev/null || true)"
-if [[ -n "$tunnel_state" && "$tunnel_state" != "inactive" ]]; then
-  line "Tunnel service" "$tunnel_state"
+if [[ "$tunnel_state" == "active" ]]; then
+  line "Tunnel service" "active"
+  if [[ -s /run/bridger-tunnel/health.url ]]; then
+    tunnel_health="$(cat /run/bridger-tunnel/health.url)"
+    ready_code="$(curl -sS -o /dev/null -w '%{http_code}' --max-time 3 "$tunnel_health/readyz" || true)"
+    if [[ "$ready_code" == "200" ]]; then
+      line "Tunnel ready" "yes"
+    else
+      line "Tunnel ready" "no (HTTP ${ready_code:-unreachable})"
+    fi
+  fi
+  if [[ -r /etc/bridger/openai-tunnel.env ]]; then
+    sed -n 's/^CONTROL_PLANE_TUNNEL_ID=/Tunnel ID: /p' /etc/bridger/openai-tunnel.env
+  fi
 else
   line "Tunnel service" "not configured"
-fi
-if [[ -s /run/bridger-tunnel/health.url ]]; then
-  tunnel_health="$(cat /run/bridger-tunnel/health.url)"
-  if curl -fsS --max-time 2 "$tunnel_health/readyz" >/dev/null 2>&1; then
-    line "Tunnel ready" "PASS"
-  else
-    line "Tunnel ready" "FAIL"
-  fi
 fi
 
 echo
@@ -97,3 +107,5 @@ if [[ "$tunnel_state" != "active" ]]; then
   echo "ChatGPT tunnel setup: sudo /opt/bridger/scripts/setup-openai-tunnel.sh"
 fi
 echo "Secrets are intentionally not displayed."
+
+exit 0

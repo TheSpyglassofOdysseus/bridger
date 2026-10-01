@@ -34,7 +34,7 @@ If you do not, use [beginner/01-compute.md](beginner/01-compute.md). The server-
 On the server:
 
 ```bash
-curl -fsSLO https://raw.githubusercontent.com/TheSpyglassofOdysseus/bridger/v0.2.0/scripts/quick-install.sh
+curl -fsSLO https://raw.githubusercontent.com/TheSpyglassofOdysseus/bridger/v0.2.1/scripts/quick-install.sh
 less quick-install.sh
 sudo bash quick-install.sh
 ```
@@ -75,13 +75,15 @@ Health check:
 sudo /opt/bridger/scripts/quick-status.sh
 ```
 
+At the end of an interactive install, Bridger asks whether you want to connect to **ChatGPT/OpenAI now**. If you say yes, it launches the tunnel wizard automatically. If you say no—or want to do it later—run the command in step 3.
+
 ## 3. Create the private OpenAI tunnel
 
 This is the only OpenAI account-side infrastructure step.
 
 A private Bridger server should **not** expose ports 18877 or 18879 to the Internet. OpenAI Secure MCP Tunnel gives supported OpenAI products an outbound-only path to the private MCP server.
 
-Run:
+If the installer did not already launch it, run:
 
 ```bash
 sudo /opt/bridger/scripts/setup-openai-tunnel.sh
