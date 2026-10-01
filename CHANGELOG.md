@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+## 0.2.1 — smoother handoff
+
+- Have the interactive quick installer offer the ChatGPT/OpenAI tunnel wizard before it exits, while allowing other MCP clients to skip it cleanly.
+- Harden the status command so it always reports core, Tailscale, and tunnel state without leaking credentials.
+- Install the bundled `cloudflared` shipped with OpenAI's tunnel-client release and keep checksum verification.
+- Let OpenAI's own tunnel doctor validate future tunnel ID formats instead of hard-coding the current hexadecimal shape.
+- Update the easy guide and README so the happy path matches the actual installer behavior.
+
 ## 0.2.0 — easy setup
 
 - Add a guided ARM64 quick installer that provisions a dedicated Bridger service account, a private Node 22 runtime, pinned dependencies, loopback-only MCP services, generated credentials, Tailscale, health checks, and an AI handoff file.
