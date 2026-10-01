@@ -18,6 +18,29 @@ The core rule is:
 
 A domain is optional. You can complete the private-server path without buying one or exposing a public web service.
 
+## Bridger is three pieces
+
+A working Bridger setup has three required layers:
+
+1. **Your server** — a Linux machine you control that stays available after the chat ends.
+2. **Bridger MCP on that server** — the server-side program that exposes bounded tools for files, commands, repositories, and services.
+3. **Your AI-side connection** — a plugin/app/connector that points your AI client at **your** Bridger MCP endpoint.
+
+For ChatGPT today, the public Bridger repository gives you the server-side MCP software; each user connects their own plugin/app to their own endpoint. ChatGPT plugin/MCP capabilities depend on plan and workspace permissions. Other MCP-capable clients have their own connection flow.
+
+Bridger does **not** include or share the maintainer's ChatGPT account, API keys, plugin credentials, credits, or usage.
+
+## What you do not need
+
+You can get meaningful use from Bridger without buying the infrastructure people often assume is necessary for persistent AI work.
+
+- **You do not need a Mac mini or dedicated home server.** A small Linux VM can be the persistent machine.
+- **You do not necessarily need a monthly server bill.** The reference path targets Oracle Always Free ARM compute when your tenancy is eligible and capacity is available.
+- **You do not need to buy a domain.** Tailscale gives you private access. A free DNS/subdomain service can provide a shareable hostname; a custom domain is optional.
+- **You do not need an AI-hosted machine merely to keep your server available.** Bridger puts the persistent machine on infrastructure you control. You still bring an AI account/client that supports the MCP actions you need. On ChatGPT, plugin/full-MCP availability depends on plan and workspace permissions, and Bridger does not bypass usage limits or billing.
+
+Free tiers, AI-plan limits, and third-party terms change. Treat these as ways to reduce cost, not permanent guarantees.
+
 ## Before you begin
 
 You need:

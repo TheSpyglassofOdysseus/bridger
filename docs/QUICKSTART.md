@@ -67,7 +67,7 @@ Then prove harmless canaries such as reading `/etc/hostname` and running a bound
 
 Passrail is **optional advanced infrastructure**. It adds durable work identity, claims/leases, retry policy, and explicit `UNKNOWN_OUTCOME` handling. It is not required for ordinary interactive AI-to-server work.
 
-If you enable it, review [ARCHITECTURE.md](ARCHITECTURE.md), [DIRECT-ONLY-OPERATIONS.md](DIRECT-ONLY-OPERATIONS.md), and [THREAT-MODEL.md](THREAT-MODEL.md) before installing the execution-owner/worker units.
+If you enable it, review [ARCHITECTURE.md](ARCHITECTURE.md) and [THREAT-MODEL.md](THREAT-MODEL.md) before installing the advanced execution-owner/worker pieces.
 
 ## 7. Public exposure is a separate decision
 

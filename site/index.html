@@ -129,6 +129,7 @@ textarea{
       <span>Bridger</span>
     </a>
     <nav class="navlinks" aria-label="Primary">
+      <a href="#use">What it's for</a>
       <a href="#how">How it works</a>
       <a href="#prompt">One-shot</a>
       <a class="gh" href="https://github.com/TheSpyglassofOdysseus/bridger" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
@@ -138,15 +139,15 @@ textarea{
 
 <main id="top">
   <div class="wrap hero">
-    <div class="eyebrow"><i class="pulse"></i> Personal AI infrastructure</div>
-    <h1>Give your AI<br><span>somewhere to work.</span></h1>
-    <p class="lede">Bridger turns a Linux server you control into persistent compute your AI can safely help inspect, build on, deploy to, and maintain.</p>
-    <p class="sublede">You do not need to become a sysadmin first. Copy one prompt into your AI and let it walk you through the setup—with financial and security boundaries kept explicit.</p>
+    <div class="eyebrow"><i class="pulse"></i> Open-source personal AI infrastructure</div>
+    <h1>Do more<br><span>with less.</span></h1>
+    <p class="lede">Bridger gives your AI a persistent Linux server to work on—without requiring dedicated hardware, a paid VPS, or a custom domain just to get started.</p>
+    <p class="sublede">Get a server. Install Bridger. Connect your AI. Build whatever you want.</p>
     <div class="actions">
       <button class="btn primary" data-copy-prompt>Copy the one-shot <span>→</span></button>
       <a class="btn secondary" href="https://github.com/TheSpyglassofOdysseus/bridger" target="_blank" rel="noopener noreferrer">View source on GitHub ↗</a>
     </div>
-    <div class="micro"><span>MIT licensed</span><span>AI-client agnostic</span><span>Private by default</span><span>No domain required</span></div>
+    <div class="micro"><span>MIT licensed</span><span>ARM64-first</span><span>Private by default</span><span>Bring your own AI</span></div>
 
     <div class="bridge" aria-label="Bridger architecture">
       <div class="flow">
@@ -160,6 +161,20 @@ textarea{
       </div>
     </div>
   </div>
+
+  <section id="use">
+    <div class="wrap">
+      <div class="kicker">Start simple</div>
+      <h2 class="section-title">Four steps. That’s the idea.</h2>
+      <p class="section-copy">Bridger is a small system, not a single download: your server + the Bridger MCP service + an AI-side plugin/connection. The one-shot helps your AI guide you through all three pieces.</p>
+      <div class="grid4">
+        <article class="card"><div class="n">01</div><h3>Get your server</h3><p>Use the Oracle free-tier path when it is available, or another Linux server you control. This is the machine that stays on.</p></article>
+        <article class="card"><div class="n">02</div><h3>Install Bridger MCP</h3><p>Install the Bridger/MCP service on that server. This is what gives the AI controlled tools on the machine.</p></article>
+        <article class="card"><div class="n">03</div><h3>Connect your AI</h3><p>The public repo gives you the Bridger MCP server. In ChatGPT today, you create/connect your own plugin to that endpoint; other MCP-capable clients have their own connection step.</p></article>
+        <article class="card"><div class="n">04</div><h3>Build & explore</h3><p>Now your AI can help build, deploy, inspect, and maintain projects on your persistent server.</p></article>
+      </div>
+    </div>
+  </section>
 
   <section id="prompt">
     <div class="wrap">
@@ -175,9 +190,16 @@ textarea{
         <div class="prompt-wrap">
 <textarea id="oneshot" readonly>I want to build my own Bridger server.
 
-Use https://github.com/TheSpyglassofOdysseus/bridger as the source of truth. Read START_HERE.md, AI_HANDOFF.md, SECURITY.md, docs/STARTER-ARCHITECTURE.md, and docs/STARTER-COUNTER-REVIEW.md before changing anything. If the repository is not accessible yet, use the architecture and hard rules in this prompt only for orientation; do not invent missing installation details.
+Use https://github.com/TheSpyglassofOdysseus/bridger as the source of truth. Read START_HERE.md, AI_HANDOFF.md, SECURITY.md, docs/STARTER-ARCHITECTURE.md, and docs/STARTER-COUNTER-REVIEW.md before changing anything.
+
+If you cannot access the repository, stop and tell me what access you need rather than inventing missing installation details.
 
 The goal: give me a persistent Linux server that my AI can safely help inspect, build on, deploy to, and maintain.
+
+Make sure we establish all three required layers:
+1. my Linux server;
+2. the Bridger MCP service running on that server;
+3. my AI-side plugin/app/connector pointing to my Bridger MCP endpoint.
 
 Reference architecture:
 - Oracle Cloud is the reference compute path, but another compatible Linux VM is fine.
@@ -216,36 +238,15 @@ Teach concepts when they become useful, but do not turn this into a generic Linu
 
   <section id="how">
     <div class="wrap">
-      <div class="kicker">The path</div>
-      <h2 class="section-title">From “I use AI” to “I own the machine.”</h2>
+      <div class="kicker">What you don't need</div>
+      <h2 class="section-title">Start without buying a pile of hardware or services.</h2>
       <div class="grid4">
-        <article class="card"><div class="n">01</div><h3>Get compute</h3><p>Provision a small Linux VM. Oracle is the reference path; the design is not locked to Oracle.</p></article>
-        <article class="card"><div class="n">02</div><h3>Make it private</h3><p>Put administration and private apps on Tailscale before you think about exposing anything publicly.</p></article>
-        <article class="card"><div class="n">03</div><h3>Connect Bridger</h3><p>Give your AI a bounded, auditable way to inspect files, run commands, and operate services.</p></article>
-        <article class="card"><div class="n">04</div><h3>Build whatever</h3><p>Sites, dashboards, research tools, automations, APIs, games—now the machine persists after the chat ends.</p></article>
+        <article class="card"><div class="n">—</div><h3>No Mac mini</h3><p>You do not need dedicated hardware or an always-on desktop at home. The server can live in the cloud.</p></article>
+        <article class="card"><div class="n">—</div><h3>No paid VPS required</h3><p>The reference path targets Oracle's free ARM compute when your account is eligible and capacity is available.</p></article>
+        <article class="card"><div class="n">—</div><h3>No domain required</h3><p>Tailscale is enough for private access. Free DNS or a free subdomain can be used when you want a shareable name.</p></article>
+        <article class="card"><div class="n">—</div><h3>No shared AI account</h3><p>Bridger does not use the author's API keys, credits, or usage. You bring your own AI account or client.</p></article>
       </div>
-
-      <div class="stack">
-        <div class="stackpanel">
-          <div class="kicker">Reference stack</div>
-          <div class="stackrow"><b>Oracle Cloud</b><p>Reference compute path. Use the console or OCI CLI when capacity/provisioning demands it; verify your own account entitlements.</p></div>
-          <div class="stackrow"><b>Tailscale</b><p>Private device-to-server network for administration, previews, dashboards, and internal services.</p></div>
-          <div class="stackrow"><b>Cloudflare</b><p>Optional domain, DNS, and public web edge when you deliberately want something on the Internet.</p></div>
-          <div class="stackrow"><b>GitHub</b><p>Source, history, collaboration, releases, and recovery. Useful, but not something you need to understand before starting.</p></div>
-          <div class="stackrow"><b>Bridger</b><p>The controlled execution boundary that gives an authorized AI practical hands on the Linux host.</p></div>
-        </div>
-
-        <div class="stackpanel">
-          <div class="kicker">Design rule</div>
-          <p class="principle">Private by default.<br><span>Public intentionally.</span></p>
-          <div class="rules">
-            <div class="rule"><div class="icon">✓</div><div><b>No domain required</b><small>A useful private AI server is already a complete setup.</small></div></div>
-            <div class="rule"><div class="icon">$</div><div><b>Human approval for money</b><small>Your AI can research prices, but it does not get to spend for you.</small></div></div>
-            <div class="rule"><div class="icon">↺</div><div><b>Recovery is part of installation</b><small>Reboot, rollback, backups, and restore tests count as “done.”</small></div></div>
-            <div class="rule"><div class="icon">≠</div><div><b>AI-readable is not AI-authorized</b><small>Clear instructions make an agent faster; boundaries keep it sane.</small></div></div>
-          </div>
-        </div>
-      </div>
+      <p class="section-copy" style="margin-top:22px">Bridger can help move persistent work onto your own server, which may reduce how often you need expensive or limited agent modes. It does not bypass your AI provider's access rules, usage limits, or billing.</p>
     </div>
   </section>
 

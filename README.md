@@ -10,6 +10,29 @@ The starter path combines a Linux VM (Oracle Cloud is the reference path), Tails
 
 **Private by default. Public intentionally.** A domain is optional, and no paid cloud resource or domain purchase should be automated without explicit human approval after current cost is shown.
 
+## Bridger is three pieces
+
+A working Bridger setup has three required layers:
+
+1. **Your server** — a Linux machine you control that stays available after the chat ends.
+2. **Bridger MCP on that server** — the server-side program that exposes bounded tools for files, commands, repositories, and services.
+3. **Your AI-side connection** — a plugin/app/connector that points your AI client at **your** Bridger MCP endpoint.
+
+For ChatGPT today, the public Bridger repository gives you the server-side MCP software; each user connects their own plugin/app to their own endpoint. ChatGPT plugin/MCP capabilities depend on plan and workspace permissions. Other MCP-capable clients have their own connection flow.
+
+Bridger does **not** include or share the maintainer's ChatGPT account, API keys, plugin credentials, credits, or usage.
+
+## What you do not need
+
+Bridger is meant to reduce the cost of experimenting with persistent AI compute, not create another shopping list.
+
+- **No dedicated Mac mini or home server.** A small Linux cloud VM can be the always-on machine. You do not need to buy dedicated hardware or leave a desktop running at home.
+- **No paid VPS is required to try the reference path.** The starter is designed around Oracle Always Free ARM compute when your account is eligible and capacity is available. Free-tier terms and capacity can change, so verify them before provisioning.
+- **No purchased domain is required.** Tailscale is enough for private access. If you want a shareable hostname, a free DNS/subdomain service can work; a custom domain is optional.
+- **No particular AI mode is built into Bridger.** You bring an AI account/client that supports the MCP actions you need. When your client can operate Bridger outside a limited agent mode, you can reserve that allowance for work that actually needs it. On ChatGPT, plugin/full-MCP availability depends on plan and workspace permissions; Bridger does not bypass provider usage limits or billing.
+
+You can start small, learn the system, and spend money only when a real requirement justifies it.
+
 AI assistants should read [`AI_HANDOFF.md`](AI_HANDOFF.md) before guiding a deployment. The design decisions and objections behind the starter are recorded in [`docs/STARTER-COUNTER-REVIEW.md`](docs/STARTER-COUNTER-REVIEW.md).
 
 Bridger turns a machine you control into a small, auditable machine-execution boundary without depending on a hosted remote-desktop relay. It reuses the upstream Desktop Commander MCP tool surface and keeps the raw machine backend on loopback.
