@@ -62,7 +62,7 @@ a{color:inherit}
   padding:22px;box-shadow:var(--shadow);overflow:hidden;position:relative
 }
 .bridge:after{content:"";position:absolute;width:380px;height:380px;border-radius:50%;right:-210px;top:-220px;background:rgba(134,242,176,.05);filter:blur(10px)}
-.flow{display:grid;grid-template-columns:repeat(7,auto);align-items:center;justify-content:center;gap:12px;position:relative;z-index:1}
+.flow{display:grid;grid-template-columns:repeat(9,auto);align-items:center;justify-content:center;gap:10px;position:relative;z-index:1}
 .node{border:1px solid var(--line2);background:#0c1b14;padding:13px 16px;border-radius:10px;text-align:center;min-width:108px}
 .node b{display:block;font-size:13px}.node small{display:block;color:var(--dim);font-size:10px;margin-top:3px}
 .node.core{border-color:rgba(134,242,176,.75);box-shadow:0 0 0 1px rgba(134,242,176,.08),0 0 35px rgba(59,199,124,.11)}
@@ -84,6 +84,11 @@ textarea{
   font:13px/1.6 ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace
 }
 .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:30px}
+.grid5{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:30px}
+.prompt-details summary{cursor:pointer;padding:15px 18px;color:var(--muted);font-size:13px;font-weight:750;list-style:none}
+.prompt-details summary::-webkit-details-marker{display:none}
+.prompt-details summary:after{content:" +";color:var(--green)}
+.prompt-details[open] summary:after{content:" −"}
 .card{border:1px solid var(--line);border-radius:13px;background:var(--panel);padding:20px}
 .card .n{font:800 11px/1 ui-monospace,monospace;color:var(--green);margin-bottom:20px}
 .card h3{font-size:16px;margin:0 0 8px}.card p{margin:0;color:var(--muted);font-size:13px}
@@ -108,11 +113,11 @@ textarea{
 .toast.show{opacity:1;transform:translateY(0)}
 @media(max-width:900px){
   .flow{grid-template-columns:1fr;max-width:360px;margin:auto}.arrow{transform:rotate(90deg);text-align:center}
-  .grid4{grid-template-columns:1fr 1fr}.stack{grid-template-columns:1fr}.navlinks a:not(.gh){display:none}
+  .grid4,.grid5{grid-template-columns:1fr 1fr}.stack{grid-template-columns:1fr}.navlinks a:not(.gh){display:none}
 }
 @media(max-width:620px){
   .wrap{width:min(100% - 24px,1160px)}.navin{height:60px}.hero{padding:68px 0 34px}.hero h1{font-size:58px}
-  .grid4{grid-template-columns:1fr}.bridge{padding:14px}.actions{display:grid}.btn{width:100%}.finalbox{align-items:flex-start;flex-direction:column}
+  .grid4,.grid5{grid-template-columns:1fr}.bridge{padding:14px}.actions{display:grid}.btn{width:100%}.finalbox{align-items:flex-start;flex-direction:column}
   textarea{height:520px}.stackrow{grid-template-columns:1fr;gap:4px}.micro{gap:8px 13px}
 }
 </style>
@@ -129,8 +134,8 @@ textarea{
       <span>Bridger</span>
     </a>
     <nav class="navlinks" aria-label="Primary">
-      <a href="#use">What it's for</a>
-      <a href="#how">How it works</a>
+      <a href="#use">5 steps</a>
+      <a href="#how">What you don't need</a>
       <a href="#prompt">One-shot</a>
       <a class="gh" href="https://github.com/TheSpyglassofOdysseus/bridger" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
     </nav>
@@ -142,10 +147,10 @@ textarea{
     <div class="eyebrow"><i class="pulse"></i> Open-source personal AI infrastructure</div>
     <h1>Do more<br><span>with less.</span></h1>
     <p class="lede">Bridger gives your AI a persistent Linux server to work on—without requiring dedicated hardware, a paid VPS, or a custom domain just to get started.</p>
-    <p class="sublede">Get a server. Install Bridger. Connect your AI. Build whatever you want.</p>
+    <p class="sublede">Get a server. Run one installer. Create a private tunnel. Add the plugin. Start building.</p>
     <div class="actions">
       <button class="btn primary" data-copy-prompt>Copy the one-shot <span>→</span></button>
-      <a class="btn secondary" href="https://github.com/TheSpyglassofOdysseus/bridger" target="_blank" rel="noopener noreferrer">View source on GitHub ↗</a>
+      <a class="btn secondary" href="https://github.com/TheSpyglassofOdysseus/bridger/blob/main/docs/EASY-SETUP.md" target="_blank" rel="noopener noreferrer">Easy setup ↗</a>
     </div>
     <div class="micro"><span>MIT licensed</span><span>ARM64-first</span><span>Private by default</span><span>Bring your own AI</span></div>
 
@@ -155,7 +160,9 @@ textarea{
         <div class="arrow">→</div>
         <div class="node"><b>Your AI</b><small>reason + build</small></div>
         <div class="arrow">→</div>
-        <div class="node core"><b>Bridger</b><small>controlled access</small></div>
+        <div class="node"><b>Secure tunnel</b><small>private connection</small></div>
+        <div class="arrow">→</div>
+        <div class="node core"><b>Bridger MCP</b><small>controlled tools</small></div>
         <div class="arrow">→</div>
         <div class="node"><b>Your server</b><small>persistent compute</small></div>
       </div>
@@ -164,14 +171,15 @@ textarea{
 
   <section id="use">
     <div class="wrap">
-      <div class="kicker">Start simple</div>
-      <h2 class="section-title">Four steps. That’s the idea.</h2>
-      <p class="section-copy">Bridger is a small system, not a single download: your server + the Bridger MCP service + an AI-side plugin/connection. The one-shot helps your AI guide you through all three pieces.</p>
-      <div class="grid4">
-        <article class="card"><div class="n">01</div><h3>Get your server</h3><p>Use the Oracle free-tier path when it is available, or another Linux server you control. This is the machine that stays on.</p></article>
-        <article class="card"><div class="n">02</div><h3>Install Bridger MCP</h3><p>Install the Bridger/MCP service on that server. This is what gives the AI controlled tools on the machine.</p></article>
-        <article class="card"><div class="n">03</div><h3>Connect your AI</h3><p>The public repo gives you the Bridger MCP server. In ChatGPT today, you create/connect your own plugin to that endpoint; other MCP-capable clients have their own connection step.</p></article>
-        <article class="card"><div class="n">04</div><h3>Build & explore</h3><p>Now your AI can help build, deploy, inspect, and maintain projects on your persistent server.</p></article>
+      <div class="kicker">The easy path</div>
+      <h2 class="section-title">Five steps. No infrastructure degree required.</h2>
+      <p class="section-copy">For ChatGPT, the private path is: your server + Bridger MCP + OpenAI Secure MCP Tunnel + your own plugin connection. ChatGPT/plugin access varies by plan and workspace, so check that your account can create a custom MCP connection before you start.</p>
+      <div class="grid5">
+        <article class="card"><div class="n">01</div><h3>Get a server</h3><p>Use eligible Oracle free ARM compute when available, or another ARM64 Linux server you control.</p></article>
+        <article class="card"><div class="n">02</div><h3>Run the installer</h3><p>One script installs Bridger, its private Node runtime, Tailscale, credentials, services, and health checks.</p></article>
+        <article class="card"><div class="n">03</div><h3>Create a tunnel</h3><p>The tunnel wizard uses OpenAI’s official client so Bridger stays private with no inbound MCP port.</p></article>
+        <article class="card"><div class="n">04</div><h3>Add the plugin</h3><p>In ChatGPT Plugins, choose Tunnel and select the tunnel you created in your own OpenAI account.</p></article>
+        <article class="card"><div class="n">05</div><h3>Build & explore</h3><p>Your AI can now help inspect, build, deploy, and maintain projects on the server that stays on.</p></article>
       </div>
     </div>
   </section>
@@ -179,59 +187,35 @@ textarea{
   <section id="prompt">
     <div class="wrap">
       <div class="kicker">Start here</div>
-      <h2 class="section-title">One prompt. Your AI handles the orientation.</h2>
-      <p class="section-copy">Paste this into ChatGPT, Claude, Codex, or another capable AI. It tells the model what Bridger is, where the source lives, and which boundaries it must not cross without you.</p>
+      <h2 class="section-title">Copy one prompt. Follow the guided path.</h2>
+      <p class="section-copy">Give this to your AI. It points to the public repo, uses the easy setup first, and keeps money/security decisions with you.</p>
 
       <div class="prompt-card">
         <div class="prompt-head">
-          <div><strong>BRIDGER ONE-SHOT</strong> <span>v0.1 starter</span></div>
+          <div><strong>BRIDGER ONE-SHOT</strong> <span>v0.2 easy setup</span></div>
           <button class="copy" data-copy-prompt>Copy prompt</button>
         </div>
-        <div class="prompt-wrap">
-<textarea id="oneshot" readonly>I want to build my own Bridger server.
+        <details class="prompt-details">
+          <summary>View the full one-shot</summary>
+          <div class="prompt-wrap">
+<textarea id="oneshot" readonly>I want to set up Bridger as simply and safely as possible.
 
-Use https://github.com/TheSpyglassofOdysseus/bridger as the source of truth. Read START_HERE.md, AI_HANDOFF.md, SECURITY.md, docs/STARTER-ARCHITECTURE.md, and docs/STARTER-COUNTER-REVIEW.md before changing anything.
+Use https://github.com/TheSpyglassofOdysseus/bridger as the source of truth. Start with docs/EASY-SETUP.md and AI_HANDOFF.md. Read SECURITY.md before making consequential changes.
 
-If you cannot access the repository, stop and tell me what access you need rather than inventing missing installation details.
+Guide me through the happy path:
+1. get or inspect my ARM64 Linux server;
+2. run the Bridger quick installer;
+3. authorize Tailscale;
+4. if I use ChatGPT, run the OpenAI Secure MCP Tunnel wizard;
+5. create/select my ChatGPT plugin connection and test harmless read-only canaries.
 
-The goal: give me a persistent Linux server that my AI can safely help inspect, build on, deploy to, and maintain.
+Do not buy anything, create paid resources, register a domain, expose MCP publicly, paste secrets into chat/Git, or enable advanced Passrail/unattended execution unless I explicitly ask after you explain the implications.
 
-Make sure we establish all three required layers:
-1. my Linux server;
-2. the Bridger MCP service running on that server;
-3. my AI-side plugin/app/connector pointing to my Bridger MCP endpoint.
+Before changing anything, inspect what I already have, tell me which step I am on, and give me only the next practical action. Stop for my approval at any financial or public-exposure boundary.
 
-Reference architecture:
-- Oracle Cloud is the reference compute path, but another compatible Linux VM is fine.
-- Tailscale is the preferred private administration network.
-- Cloudflare/domain/DNS is optional and only needed when I intentionally publish a web service.
-- Git/GitHub are for source history, collaboration, releases, and recovery—not the steady-state runtime command bus.
-- Bridger is the controlled AI-to-host execution boundary.
-- Private by default. Public intentionally.
-
-Start by inspecting what I already have. Do not create, purchase, upgrade, expose, or delete anything yet.
-
-Before implementation, tell me:
-1. what I already have and what is missing;
-2. the architecture you recommend for my situation;
-3. what can stay private through Tailscale;
-4. whether I need a domain at all;
-5. every step that could create a charge;
-6. every step that changes public network exposure;
-7. the safest next action.
-
-Hard rules:
-- Never create a billable cloud resource, upgrade a cloud account, register/transfer a domain, or enable a paid plan without showing me the current exact cost/implication and getting my explicit approval.
-- Verify my actual cloud tenancy/account entitlements and current provider documentation; do not assume old Oracle Free Tier numbers or the reference author's allocation apply to me.
-- Never expose raw MCP/Desktop Commander, databases, SSH, or admin surfaces publicly merely for convenience.
-- Keep secrets out of Git and logs and use least privilege.
-- Do not blindly retry a consequential action with an ambiguous result; inspect actual state first.
-- Preserve rollback before consequential changes.
-- A backup is not complete until we test a restore.
-- Do not call the setup complete until private access, Bridger canaries, cost boundaries, reboot behavior, backup/restore, and rollback are verified.
-
-Teach concepts when they become useful, but do not turn this into a generic Linux course. Walk me through it one practical step at a time and stop for my approval at every financial or public-exposure boundary.</textarea>
-        </div>
+If my AI account/client does not support the required MCP/plugin connection, tell me before we spend time provisioning infrastructure.</textarea>
+          </div>
+        </details>
       </div>
     </div>
   </section>
@@ -254,12 +238,12 @@ Teach concepts when they become useful, but do not turn this into a generic Linu
     <div class="finalbox">
       <div>
         <div class="kicker">Ready?</div>
-        <h2>Copy the prompt.<br>Build your Bridger.</h2>
-        <p>GitHub is there when you want the source. You do not have to start there.</p>
+        <h2>Five steps.<br>Your server. Your AI.</h2>
+        <p>Start with the one-shot or open the easy setup. The detailed repo is there when you need to troubleshoot or learn more.</p>
       </div>
       <div class="actions" style="margin-top:0">
         <button class="btn primary" data-copy-prompt>Copy the one-shot</button>
-        <a class="btn secondary" href="https://github.com/TheSpyglassofOdysseus/bridger" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+        <a class="btn secondary" href="https://github.com/TheSpyglassofOdysseus/bridger/blob/main/docs/EASY-SETUP.md" target="_blank" rel="noopener noreferrer">Easy setup ↗</a>
       </div>
     </div>
   </div>

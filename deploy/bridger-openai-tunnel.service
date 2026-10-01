@@ -1,0 +1,39 @@
+[Unit]
+Description=Bridger OpenAI Secure MCP Tunnel
+Documentation=https://developers.openai.com/api/docs/guides/secure-mcp-tunnels
+After=network-online.target bridge-interactive-facade.service
+Wants=network-online.target
+Requires=bridge-interactive-facade.service
+
+[Service]
+Type=simple
+User=bridger
+Group=bridger
+Environment=HOME=/home/bridger
+EnvironmentFile=/etc/bridger/openai-tunnel.env
+ExecStart=/opt/bridger-tunnel/tunnel-client run --log.level info --log.format struct-text
+Restart=always
+RestartSec=3
+RuntimeDirectory=bridger-tunnel
+RuntimeDirectoryMode=0750
+NoNewPrivileges=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectSystem=strict
+ProtectHome=read-only
+ReadOnlyPaths=/etc/bridger
+ReadWritePaths=/run/bridger-tunnel /home/bridger/.config/bridger-tunnel
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+LockPersonality=true
+RestrictSUIDSGID=true
+RestrictRealtime=true
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+CapabilityBoundingSet=
+AmbientCapabilities=
+SystemCallArchitectures=native
+UMask=0077
+
+[Install]
+WantedBy=multi-user.target

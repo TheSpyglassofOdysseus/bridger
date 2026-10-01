@@ -35,7 +35,7 @@ fi
 
 echo
 echo "-- required starter files --"
-for file in START_HERE.md AI_HANDOFF.md docs/STARTER-ARCHITECTURE.md docs/STARTER-COUNTER-REVIEW.md; do
+for file in   START_HERE.md   AI_HANDOFF.md   docs/STARTER-ARCHITECTURE.md   docs/STARTER-COUNTER-REVIEW.md   docs/EASY-SETUP.md   scripts/quick-install.sh   scripts/quick-status.sh   scripts/quick-uninstall.sh   scripts/setup-openai-tunnel.sh   scripts/tunnel-status.sh   deploy/bridge-mcp.service   deploy/bridge-interactive-facade.service   deploy/bridger-openai-tunnel.service; do
   test -s "$file"
   echo "OK $file"
 done

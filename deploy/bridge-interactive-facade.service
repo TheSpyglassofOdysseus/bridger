@@ -9,11 +9,14 @@ Type=simple
 User=bridger
 Group=bridger
 WorkingDirectory=/opt/bridger/selfhosted
+Environment=HOME=/home/bridger
 EnvironmentFile=/etc/bridger/bridger.env
+Environment=PATH=/opt/bridger-runtime/node/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+Environment=BRIDGER_INTERACTIVE_ARTIFACT_DIR=/home/bridger/.local/state/bridger-interactive/artifacts
 Environment=BRIDGER_INTERACTIVE_CONCURRENCY=1
 Environment=BRIDGER_INTERACTIVE_MAX_LINES=200
 Environment=BRIDGER_INTERACTIVE_MAX_CHARS=12000
-ExecStart=/usr/bin/node /opt/bridger/selfhosted/node_modules/mcp-proxy/dist/bin/mcp-proxy.mjs --host 127.0.0.1 --port 18879 --server stream --endpoint /mcp --no-eventStore --sessionIdleTimeout 300000 --maxBodySize 1048576 --corsAddAllowedHeader X-API-Key -- /usr/bin/node /opt/bridger/selfhosted/bridger-interactive-facade.mjs
+ExecStart=/usr/bin/env node /opt/bridger/selfhosted/node_modules/mcp-proxy/dist/bin/mcp-proxy.mjs --host 127.0.0.1 --port 18879 --server stream --endpoint /mcp --no-eventStore --sessionIdleTimeout 300000 --maxBodySize 1048576 --corsAddAllowedHeader X-API-Key -- /usr/bin/env node /opt/bridger/selfhosted/bridger-interactive-facade.mjs
 Restart=always
 RestartSec=2s
 NoNewPrivileges=true
@@ -29,6 +32,7 @@ SystemCallArchitectures=native
 PrivateTmp=true
 PrivateDevices=true
 ProtectSystem=strict
+ReadWritePaths=/home/bridger/.local/state/bridger-interactive
 IPAddressDeny=any
 IPAddressAllow=localhost
 UMask=0077

@@ -26,7 +26,7 @@ if [[ -n "$hits" ]]; then
   fail private_coordinate_candidate
 fi
 
-for required in   README.md   START_HERE.md   AI_HANDOFF.md   SECURITY.md   LICENSE   SUPPORT.md   docs/beginner/05-install-bridger.md   docs/beginner/06-connect-your-ai.md   docs/beginner/12-credential-rotation.md   deploy/bridge-mcp.service   deploy/bridge-actions.service   deploy/bridge-interactive-facade.service   PUBLICATION-MANIFEST.sha256; do
+for required in   README.md   START_HERE.md   AI_HANDOFF.md   SECURITY.md   LICENSE   SUPPORT.md   docs/EASY-SETUP.md   docs/beginner/05-install-bridger.md   docs/beginner/06-connect-your-ai.md   docs/beginner/12-credential-rotation.md   scripts/quick-install.sh   scripts/quick-status.sh   scripts/quick-uninstall.sh   scripts/setup-openai-tunnel.sh   scripts/tunnel-status.sh   deploy/bridge-mcp.service   deploy/bridge-actions.service   deploy/bridge-interactive-facade.service   deploy/bridger-openai-tunnel.service   PUBLICATION-MANIFEST.sha256; do
   [[ -s "$required" ]] || fail "required_file_missing:$required"
 done
 

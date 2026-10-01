@@ -4,7 +4,7 @@
 
 ## New here? Build your own personal AI server
 
-If you are comfortable with AI but not necessarily a Linux/sysadmin expert, start with [`START_HERE.md`](START_HERE.md). The repository also includes a self-contained static landing page in [`site/index.html`](site/index.html) with a copyable one-shot prompt for AI-assisted setup.
+If you want the shortest path, start with [`docs/EASY-SETUP.md`](docs/EASY-SETUP.md): existing ARM64 Linux server → one installer → Tailscale approval → Bridger handoff → connect your AI. If you want to understand every layer, use [`START_HERE.md`](START_HERE.md). The repository also includes a self-contained static landing page in [`site/index.html`](site/index.html).
 
 The starter path combines a Linux VM (Oracle Cloud is the reference path), Tailscale private networking, optional Cloudflare domain/DNS for intentionally public web services, Git/GitHub for source and recovery, and Bridger as the controlled AI-to-host execution boundary.
 
@@ -18,7 +18,7 @@ A working Bridger setup has three required layers:
 2. **Bridger MCP on that server** — the server-side program that exposes bounded tools for files, commands, repositories, and services.
 3. **Your AI-side connection** — a plugin/app/connector that points your AI client at **your** Bridger MCP endpoint.
 
-For ChatGPT today, the public Bridger repository gives you the server-side MCP software; each user connects their own plugin/app to their own endpoint. ChatGPT plugin/MCP capabilities depend on plan and workspace permissions. Other MCP-capable clients have their own connection flow.
+For ChatGPT's private path, that third layer has two account-side steps: **OpenAI Secure MCP Tunnel + your personal ChatGPT plugin connection**. The tunnel keeps the MCP server private; the plugin lets your ChatGPT workspace select that tunnel. Each user creates these in their own OpenAI account/workspace. ChatGPT plugin/MCP capabilities depend on plan and workspace permissions. Other MCP-capable clients have their own connection flow.
 
 Bridger does **not** include or share the maintainer's ChatGPT account, API keys, plugin credentials, credits, or usage.
 
@@ -102,13 +102,18 @@ Both upstream Node dependencies are pinned and MIT-licensed.
 
 ## Quick start
 
-Bridger is intended for Linux hosts with systemd, Python 3.11+, and Node.js 22+. **v0.1 is release-certified on ARM64 Linux; x86_64 is experimental until independently clean-room tested.** A public reverse proxy is optional; a Tailscale-only private deployment is complete.
+Bridger is intended for Linux hosts with systemd and Python 3.11+. **v0.2 is release-certified on ARM64 Ubuntu/Debian for the easy installer; x86_64 remains experimental until independently clean-room tested.** The easy installer brings its own private Node.js 22 runtime, so it does not replace system Node.
 
-1. Start with [`START_HERE.md`](START_HERE.md).
-2. Install the interactive core using [`docs/beginner/05-install-bridger.md`](docs/beginner/05-install-bridger.md).
-3. Connect your AI using [`docs/beginner/06-connect-your-ai.md`](docs/beginner/06-connect-your-ai.md).
-4. Run `scripts/check.sh` and harmless read/process canaries.
-5. Add Passrail only if you actually need durable/scheduled work.
+Use [`docs/EASY-SETUP.md`](docs/EASY-SETUP.md):
+
+1. get an ARM64 Linux server;
+2. run `scripts/quick-install.sh`;
+3. authorize Tailscale;
+4. for ChatGPT, run `scripts/setup-openai-tunnel.sh`;
+5. select that tunnel when creating your personal ChatGPT plugin connection;
+6. run harmless canaries and start building.
+
+The manual beginner/operator docs remain available for unsupported distributions, troubleshooting, and advanced Passrail/public-web configurations.
 
 ## Status
 

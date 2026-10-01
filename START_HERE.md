@@ -2,7 +2,7 @@
 
 Build a small Linux server that your AI can safely help operate.
 
-This starter is for people who are comfortable using an AI assistant but may not be experienced Linux administrators. The goal is not to hide the infrastructure. The goal is to make it understandable enough that you can own it.
+This starter is for people who are comfortable using an AI assistant but may not be experienced Linux administrators. If you already have an ARM64 Ubuntu/Debian server and want the shortest route, use [`docs/EASY-SETUP.md`](docs/EASY-SETUP.md). The rest of this guide explains the system in more detail. The goal is not to hide the infrastructure. The goal is to make it understandable enough that you can own it.
 
 ## The idea
 
@@ -26,7 +26,7 @@ A working Bridger setup has three required layers:
 2. **Bridger MCP on that server** — the server-side program that exposes bounded tools for files, commands, repositories, and services.
 3. **Your AI-side connection** — a plugin/app/connector that points your AI client at **your** Bridger MCP endpoint.
 
-For ChatGPT today, the public Bridger repository gives you the server-side MCP software; each user connects their own plugin/app to their own endpoint. ChatGPT plugin/MCP capabilities depend on plan and workspace permissions. Other MCP-capable clients have their own connection flow.
+For ChatGPT's private path, the third layer has two account-side pieces: **OpenAI Secure MCP Tunnel + your personal ChatGPT plugin connection**. Each user creates these in their own OpenAI account/workspace. The tunnel keeps Bridger private; the plugin lets ChatGPT select that tunnel. ChatGPT plugin/MCP capabilities depend on plan and workspace permissions. Other MCP-capable clients have their own connection flow.
 
 Bridger does **not** include or share the maintainer's ChatGPT account, API keys, plugin credentials, credits, or usage.
 
@@ -47,10 +47,11 @@ You need:
 
 - a computer with a web browser and terminal;
 - an SSH key or willingness to create one;
-- for the v0.1 release-certified path, an ARM64 Linux server (x86_64 is experimental until independently verified);
+- for the v0.2 easy-install release-certified path, an ARM64 Ubuntu/Debian server (x86_64 remains experimental until independently verified);
 - an Oracle Cloud account for the reference path, or another Linux VM you control;
 - a Tailscale account;
 - a GitHub account if you want remote source hosting;
+- if you plan to use ChatGPT, an OpenAI account/workspace that currently supports the required custom MCP/plugin + Secure MCP Tunnel flow (verify this before provisioning);
 - optionally, a Cloudflare account and a domain for public web apps.
 
 ### Billing rule
