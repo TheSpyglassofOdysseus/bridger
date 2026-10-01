@@ -1,0 +1,30 @@
+[Unit]
+Description=Bridger self-hosted Desktop Commander MCP
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=bridger
+Group=bridger
+WorkingDirectory=/opt/bridger/selfhosted
+EnvironmentFile=/etc/bridger/bridger.env
+ExecStart=/opt/bridger/selfhosted/node_modules/.bin/mcp-proxy --host 127.0.0.1 --port ${BRIDGE_DC_PORT} --server stream --endpoint /mcp --no-eventStore --sessionIdleTimeout 300000 --maxBodySize 1048576 --corsAddAllowedHeader X-API-Key -- /opt/bridger/selfhosted/node_modules/.bin/desktop-commander
+Restart=on-failure
+RestartSec=5
+KillMode=mixed
+NoNewPrivileges=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+LockPersonality=true
+RestrictSUIDSGID=true
+RestrictRealtime=true
+CapabilityBoundingSet=
+AmbientCapabilities=
+SystemCallArchitectures=native
+UMask=0077
+LimitNOFILE=4096
+
+[Install]
+WantedBy=multi-user.target

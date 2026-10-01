@@ -1,0 +1,43 @@
+name: Bug report
+description: Report a reproducible Bridger problem
+title: "[Bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Do not include secrets, tokens, private hostnames/IPs, or exploit details.
+        Security vulnerabilities belong in the process described by SECURITY.md.
+  - type: input
+    id: version
+    attributes:
+      label: Bridger version / commit
+      placeholder: v0.x.x or commit SHA
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: OS, architecture, Python, Node, and npm versions.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Minimal reproduction
+      description: Include sanitized commands/logs only.
+    validations:
+      required: true

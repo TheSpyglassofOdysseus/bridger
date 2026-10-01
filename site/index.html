@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#07110d">
+<meta name="description" content="Bridger turns a Linux server you control into persistent compute your AI can safely help operate.">
+<title>Bridger — Give your AI somewhere to work</title>
+<style>
+:root{
+  --bg:#07100c;--bg2:#0a1510;--panel:rgba(15,29,23,.72);--panel2:#0d1b15;--line:#1e3b2e;
+  --line2:#2c5944;--text:#f2f7f4;--muted:#9eb1a7;--dim:#6f877a;--green:#86f2b0;--green2:#3bc77c;
+  --cyan:#78dfd1;--amber:#f1cf7c;--shadow:0 30px 90px rgba(0,0,0,.36)
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;color:var(--text);font:15px/1.55 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  background:
+    radial-gradient(900px 550px at 82% -10%,rgba(59,199,124,.14),transparent 65%),
+    radial-gradient(700px 500px at -5% 35%,rgba(120,223,209,.08),transparent 60%),
+    linear-gradient(180deg,#07100c 0%,#08120e 48%,#060c09 100%);
+  min-height:100vh
+}
+body:before{
+  content:"";position:fixed;inset:0;pointer-events:none;opacity:.22;
+  background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+  background-size:42px 42px;mask-image:linear-gradient(to bottom,#000,transparent 78%)
+}
+a{color:inherit}
+.wrap{width:min(1160px,calc(100% - 36px));margin:0 auto}
+.nav{
+  position:sticky;top:0;z-index:30;background:rgba(7,16,12,.82);backdrop-filter:blur(18px);
+  border-bottom:1px solid rgba(134,242,176,.10)
+}
+.navin{height:68px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;font-weight:800;letter-spacing:.02em}
+.logo{width:36px;height:36px;border:1px solid var(--line2);border-radius:9px;display:grid;place-items:center;background:#0c1a14;box-shadow:inset 0 0 0 1px rgba(255,255,255,.02)}
+.logo svg{width:22px;height:22px}
+.navlinks{display:flex;gap:8px;align-items:center}
+.navlinks a{text-decoration:none;color:var(--muted);padding:8px 11px;border-radius:7px;font-size:13px}
+.navlinks a:hover{color:var(--text);background:rgba(255,255,255,.035)}
+.navlinks .gh{border:1px solid var(--line);color:#dce8e1}
+.hero{padding:96px 0 52px}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--green);font-size:12px;font-weight:800;letter-spacing:.13em;text-transform:uppercase}
+.pulse{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 18px rgba(134,242,176,.75)}
+.hero h1{font-size:clamp(52px,9vw,112px);line-height:.88;letter-spacing:-.065em;margin:22px 0 24px;font-weight:880}
+.hero h1 span{display:block;color:var(--green)}
+.lede{font-size:clamp(19px,2.5vw,28px);line-height:1.32;letter-spacing:-.025em;max-width:810px;color:#d9e7df;margin:0}
+.sublede{max-width:690px;color:var(--muted);font-size:16px;margin:22px 0 0}
+.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px}
+.btn{appearance:none;border:0;border-radius:9px;padding:13px 17px;font:inherit;font-weight:800;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:9px}
+.btn.primary{background:var(--green);color:#07100c;box-shadow:0 12px 35px rgba(59,199,124,.16)}
+.btn.primary:hover{background:#a1f6c1;transform:translateY(-1px)}
+.btn.secondary{border:1px solid var(--line2);background:#0b1812;color:#e4eee8}
+.btn.secondary:hover{border-color:#44775e;background:#102219}
+.micro{display:flex;flex-wrap:wrap;gap:16px;margin-top:28px;color:var(--dim);font-size:12px}
+.micro span:before{content:"✓";color:var(--green);margin-right:6px}
+.bridge{
+  margin-top:68px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(180deg,rgba(14,29,22,.86),rgba(8,18,14,.82));
+  padding:22px;box-shadow:var(--shadow);overflow:hidden;position:relative
+}
+.bridge:after{content:"";position:absolute;width:380px;height:380px;border-radius:50%;right:-210px;top:-220px;background:rgba(134,242,176,.05);filter:blur(10px)}
+.flow{display:grid;grid-template-columns:repeat(7,auto);align-items:center;justify-content:center;gap:12px;position:relative;z-index:1}
+.node{border:1px solid var(--line2);background:#0c1b14;padding:13px 16px;border-radius:10px;text-align:center;min-width:108px}
+.node b{display:block;font-size:13px}.node small{display:block;color:var(--dim);font-size:10px;margin-top:3px}
+.node.core{border-color:rgba(134,242,176,.75);box-shadow:0 0 0 1px rgba(134,242,176,.08),0 0 35px rgba(59,199,124,.11)}
+.arrow{color:var(--green);font-size:18px}
+section{padding:68px 0}
+.kicker{color:var(--green);text-transform:uppercase;letter-spacing:.12em;font-size:11px;font-weight:850;margin-bottom:10px}
+.section-title{font-size:clamp(30px,5vw,52px);line-height:1.02;letter-spacing:-.045em;margin:0;max-width:760px}
+.section-copy{color:var(--muted);font-size:16px;max-width:710px;margin:15px 0 0}
+.prompt-card{
+  margin-top:28px;border:1px solid var(--line2);border-radius:16px;background:#07100d;overflow:hidden;box-shadow:var(--shadow)
+}
+.prompt-head{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 16px;border-bottom:1px solid var(--line);background:#0c1913}
+.prompt-head strong{font-size:13px}.prompt-head span{color:var(--dim);font-size:11px}
+.copy{border:1px solid var(--line2);background:#10231a;color:var(--text);padding:8px 11px;border-radius:7px;font:inherit;font-size:12px;font-weight:800;cursor:pointer}
+.copy:hover{border-color:var(--green);color:var(--green)}
+.prompt-wrap{position:relative}
+textarea{
+  display:block;width:100%;height:430px;resize:vertical;border:0;outline:0;padding:22px;background:#07100d;color:#cfe0d6;
+  font:13px/1.6 ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace
+}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:30px}
+.card{border:1px solid var(--line);border-radius:13px;background:var(--panel);padding:20px}
+.card .n{font:800 11px/1 ui-monospace,monospace;color:var(--green);margin-bottom:20px}
+.card h3{font-size:16px;margin:0 0 8px}.card p{margin:0;color:var(--muted);font-size:13px}
+.stack{display:grid;grid-template-columns:1.05fr .95fr;gap:16px;margin-top:28px}
+.stackpanel{border:1px solid var(--line);border-radius:15px;background:var(--panel);padding:22px}
+.stackrow{display:grid;grid-template-columns:130px 1fr;gap:15px;padding:13px 0;border-top:1px solid rgba(255,255,255,.055)}
+.stackrow:first-of-type{border-top:0}
+.stackrow b{font-size:13px}.stackrow p{margin:0;color:var(--muted);font-size:13px}
+.principle{font-size:clamp(28px,4.6vw,46px);line-height:1.05;letter-spacing:-.04em;margin:0 0 22px}
+.principle span{color:var(--green)}
+.rules{display:grid;gap:10px}
+.rule{display:flex;gap:12px;align-items:flex-start;padding:13px 0;border-top:1px solid rgba(255,255,255,.055)}
+.rule:first-child{border-top:0}
+.icon{width:26px;height:26px;border-radius:7px;background:#10241a;color:var(--green);display:grid;place-items:center;flex:0 0 auto;font-weight:900}
+.rule b{display:block;font-size:13px}.rule small{color:var(--muted);display:block;margin-top:2px}
+.final{padding:58px 0 90px}
+.finalbox{border:1px solid var(--line2);border-radius:18px;padding:34px;background:linear-gradient(135deg,#0d2118,#0a1611);display:flex;align-items:center;justify-content:space-between;gap:30px}
+.finalbox h2{font-size:clamp(30px,5vw,50px);letter-spacing:-.045em;line-height:1;margin:0}.finalbox p{color:var(--muted);margin:12px 0 0;max-width:570px}
+.footer{border-top:1px solid var(--line);padding:22px 0 34px;color:var(--dim);font-size:12px}
+.footerin{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.toast{position:fixed;right:18px;bottom:18px;background:var(--green);color:#06100b;padding:11px 14px;border-radius:9px;font-weight:850;font-size:12px;opacity:0;transform:translateY(8px);pointer-events:none;transition:.2s;z-index:50}
+.toast.show{opacity:1;transform:translateY(0)}
+@media(max-width:900px){
+  .flow{grid-template-columns:1fr;max-width:360px;margin:auto}.arrow{transform:rotate(90deg);text-align:center}
+  .grid4{grid-template-columns:1fr 1fr}.stack{grid-template-columns:1fr}.navlinks a:not(.gh){display:none}
+}
+@media(max-width:620px){
+  .wrap{width:min(100% - 24px,1160px)}.navin{height:60px}.hero{padding:68px 0 34px}.hero h1{font-size:58px}
+  .grid4{grid-template-columns:1fr}.bridge{padding:14px}.actions{display:grid}.btn{width:100%}.finalbox{align-items:flex-start;flex-direction:column}
+  textarea{height:520px}.stackrow{grid-template-columns:1fr;gap:4px}.micro{gap:8px 13px}
+}
+</style>
+</head>
+<body>
+<header class="nav">
+  <div class="wrap navin">
+    <a class="brand" href="#top" aria-label="Bridger home">
+      <span class="logo">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M3 16h18M5 16c.8-5.2 3.1-8 7-8s6.2 2.8 7 8M7 16v3m10-3v3" stroke="#86f2b0" stroke-width="1.7" stroke-linecap="round"/>
+        </svg>
+      </span>
+      <span>Bridger</span>
+    </a>
+    <nav class="navlinks" aria-label="Primary">
+      <a href="#how">How it works</a>
+      <a href="#prompt">One-shot</a>
+      <a class="gh" href="https://github.com/TheSpyglassofOdysseus/bridger" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <div class="wrap hero">
+    <div class="eyebrow"><i class="pulse"></i> Personal AI infrastructure</div>
+    <h1>Give your AI<br><span>somewhere to work.</span></h1>
+    <p class="lede">Bridger turns a Linux server you control into persistent compute your AI can safely help inspect, build on, deploy to, and maintain.</p>
+    <p class="sublede">You do not need to become a sysadmin first. Copy one prompt into your AI and let it walk you through the setup—with financial and security boundaries kept explicit.</p>
+    <div class="actions">
+      <button class="btn primary" data-copy-prompt>Copy the one-shot <span>→</span></button>
+      <a class="btn secondary" href="https://github.com/TheSpyglassofOdysseus/bridger" target="_blank" rel="noopener noreferrer">View source on GitHub ↗</a>
+    </div>
+    <div class="micro"><span>MIT licensed</span><span>AI-client agnostic</span><span>Private by default</span><span>No domain required</span></div>
+
+    <div class="bridge" aria-label="Bridger architecture">
+      <div class="flow">
+        <div class="node"><b>You</b><small>decide</small></div>
+        <div class="arrow">→</div>
+        <div class="node"><b>Your AI</b><small>reason + build</small></div>
+        <div class="arrow">→</div>
+        <div class="node core"><b>Bridger</b><small>controlled access</small></div>
+        <div class="arrow">→</div>
+        <div class="node"><b>Your server</b><small>persistent compute</small></div>
+      </div>
+    </div>
+  </div>
+
+  <section id="prompt">
+    <div class="wrap">
+      <div class="kicker">Start here</div>
+      <h2 class="section-title">One prompt. Your AI handles the orientation.</h2>
+      <p class="section-copy">Paste this into ChatGPT, Claude, Codex, or another capable AI. It tells the model what Bridger is, where the source lives, and which boundaries it must not cross without you.</p>
+
+      <div class="prompt-card">
+        <div class="prompt-head">
+          <div><strong>BRIDGER ONE-SHOT</strong> <span>v0.1 starter</span></div>
+          <button class="copy" data-copy-prompt>Copy prompt</button>
+        </div>
+        <div class="prompt-wrap">
+<textarea id="oneshot" readonly>I want to build my own Bridger server.
+
+Use https://github.com/TheSpyglassofOdysseus/bridger as the source of truth. Read START_HERE.md, AI_HANDOFF.md, SECURITY.md, docs/STARTER-ARCHITECTURE.md, and docs/STARTER-COUNTER-REVIEW.md before changing anything. If the repository is not accessible yet, use the architecture and hard rules in this prompt only for orientation; do not invent missing installation details.
+
+The goal: give me a persistent Linux server that my AI can safely help inspect, build on, deploy to, and maintain.
+
+Reference architecture:
+- Oracle Cloud is the reference compute path, but another compatible Linux VM is fine.
+- Tailscale is the preferred private administration network.
+- Cloudflare/domain/DNS is optional and only needed when I intentionally publish a web service.
+- Git/GitHub are for source history, collaboration, releases, and recovery—not the steady-state runtime command bus.
+- Bridger is the controlled AI-to-host execution boundary.
+- Private by default. Public intentionally.
+
+Start by inspecting what I already have. Do not create, purchase, upgrade, expose, or delete anything yet.
+
+Before implementation, tell me:
+1. what I already have and what is missing;
+2. the architecture you recommend for my situation;
+3. what can stay private through Tailscale;
+4. whether I need a domain at all;
+5. every step that could create a charge;
+6. every step that changes public network exposure;
+7. the safest next action.
+
+Hard rules:
+- Never create a billable cloud resource, upgrade a cloud account, register/transfer a domain, or enable a paid plan without showing me the current exact cost/implication and getting my explicit approval.
+- Verify my actual cloud tenancy/account entitlements and current provider documentation; do not assume old Oracle Free Tier numbers or the reference author's allocation apply to me.
+- Never expose raw MCP/Desktop Commander, databases, SSH, or admin surfaces publicly merely for convenience.
+- Keep secrets out of Git and logs and use least privilege.
+- Do not blindly retry a consequential action with an ambiguous result; inspect actual state first.
+- Preserve rollback before consequential changes.
+- A backup is not complete until we test a restore.
+- Do not call the setup complete until private access, Bridger canaries, cost boundaries, reboot behavior, backup/restore, and rollback are verified.
+
+Teach concepts when they become useful, but do not turn this into a generic Linux course. Walk me through it one practical step at a time and stop for my approval at every financial or public-exposure boundary.</textarea>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="how">
+    <div class="wrap">
+      <div class="kicker">The path</div>
+      <h2 class="section-title">From “I use AI” to “I own the machine.”</h2>
+      <div class="grid4">
+        <article class="card"><div class="n">01</div><h3>Get compute</h3><p>Provision a small Linux VM. Oracle is the reference path; the design is not locked to Oracle.</p></article>
+        <article class="card"><div class="n">02</div><h3>Make it private</h3><p>Put administration and private apps on Tailscale before you think about exposing anything publicly.</p></article>
+        <article class="card"><div class="n">03</div><h3>Connect Bridger</h3><p>Give your AI a bounded, auditable way to inspect files, run commands, and operate services.</p></article>
+        <article class="card"><div class="n">04</div><h3>Build whatever</h3><p>Sites, dashboards, research tools, automations, APIs, games—now the machine persists after the chat ends.</p></article>
+      </div>
+
+      <div class="stack">
+        <div class="stackpanel">
+          <div class="kicker">Reference stack</div>
+          <div class="stackrow"><b>Oracle Cloud</b><p>Reference compute path. Use the console or OCI CLI when capacity/provisioning demands it; verify your own account entitlements.</p></div>
+          <div class="stackrow"><b>Tailscale</b><p>Private device-to-server network for administration, previews, dashboards, and internal services.</p></div>
+          <div class="stackrow"><b>Cloudflare</b><p>Optional domain, DNS, and public web edge when you deliberately want something on the Internet.</p></div>
+          <div class="stackrow"><b>GitHub</b><p>Source, history, collaboration, releases, and recovery. Useful, but not something you need to understand before starting.</p></div>
+          <div class="stackrow"><b>Bridger</b><p>The controlled execution boundary that gives an authorized AI practical hands on the Linux host.</p></div>
+        </div>
+
+        <div class="stackpanel">
+          <div class="kicker">Design rule</div>
+          <p class="principle">Private by default.<br><span>Public intentionally.</span></p>
+          <div class="rules">
+            <div class="rule"><div class="icon">✓</div><div><b>No domain required</b><small>A useful private AI server is already a complete setup.</small></div></div>
+            <div class="rule"><div class="icon">$</div><div><b>Human approval for money</b><small>Your AI can research prices, but it does not get to spend for you.</small></div></div>
+            <div class="rule"><div class="icon">↺</div><div><b>Recovery is part of installation</b><small>Reboot, rollback, backups, and restore tests count as “done.”</small></div></div>
+            <div class="rule"><div class="icon">≠</div><div><b>AI-readable is not AI-authorized</b><small>Clear instructions make an agent faster; boundaries keep it sane.</small></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap final">
+    <div class="finalbox">
+      <div>
+        <div class="kicker">Ready?</div>
+        <h2>Copy the prompt.<br>Build your Bridger.</h2>
+        <p>GitHub is there when you want the source. You do not have to start there.</p>
+      </div>
+      <div class="actions" style="margin-top:0">
+        <button class="btn primary" data-copy-prompt>Copy the one-shot</button>
+        <a class="btn secondary" href="https://github.com/TheSpyglassofOdysseus/bridger" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="wrap footerin"><span>Bridger · Personal AI infrastructure</span><span>Built on a server Bridger can operate.</span></div>
+</footer>
+<div class="toast" id="toast" role="status" aria-live="polite">Prompt copied.</div>
+<script>
+(function(){
+  var promptEl=document.getElementById('oneshot');
+  var toast=document.getElementById('toast');
+  function showToast(msg){
+    toast.textContent=msg;
+    toast.classList.add('show');
+    setTimeout(function(){toast.classList.remove('show')},1800);
+  }
+  function fallbackCopy(){
+    promptEl.focus();
+    promptEl.select();
+    promptEl.setSelectionRange(0,promptEl.value.length);
+    try{document.execCommand('copy');showToast('Prompt copied.');}
+    catch(e){showToast('Select the prompt and copy it.');}
+  }
+  function copyPrompt(){
+    if(navigator.clipboard && window.isSecureContext){
+      navigator.clipboard.writeText(promptEl.value).then(function(){showToast('Prompt copied.');},fallbackCopy);
+    }else{fallbackCopy();}
+  }
+  document.querySelectorAll('[data-copy-prompt]').forEach(function(btn){btn.addEventListener('click',copyPrompt);});
+})();
+</script>
+</body>
+</html>

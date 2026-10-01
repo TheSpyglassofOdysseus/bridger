@@ -1,0 +1,33 @@
+[Unit]
+Description=Bridger authenticated Actions facade
+After=network-online.target bridge-mcp.service
+Requires=bridge-mcp.service
+
+[Service]
+Type=simple
+User=bridger
+Group=bridger
+WorkingDirectory=/opt/bridger
+EnvironmentFile=/etc/bridger/bridger.env
+ExecStart=/usr/bin/python3 /opt/bridger/selfhosted/bridge-gpt-actions.py --host 127.0.0.1 --port ${BRIDGE_ACTIONS_PORT}
+Restart=on-failure
+RestartSec=3
+NoNewPrivileges=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+LockPersonality=true
+RestrictSUIDSGID=true
+RestrictRealtime=true
+CapabilityBoundingSet=
+AmbientCapabilities=
+SystemCallArchitectures=native
+PrivateTmp=true
+PrivateDevices=true
+ProtectSystem=strict
+IPAddressDeny=any
+IPAddressAllow=localhost
+UMask=0077
+
+[Install]
+WantedBy=multi-user.target
