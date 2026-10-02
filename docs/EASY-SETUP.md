@@ -29,6 +29,33 @@ If you already have a compatible server, skip straight to step 2.
 
 If you do not, use [beginner/01-compute.md](beginner/01-compute.md). The server-creation step stays separate because cloud-account eligibility, capacity, and possible charges belong to the human—not the installer.
 
+### Oracle: easiest free-server path
+
+Useful official links:
+
+- [Oracle Cloud Free Tier](https://docs.oracle.com/en-us/iaas/Content/FreeTier/freetier.htm)
+- [Always Free resources](https://docs.oracle.com/en-us/iaas/Content/FreeTier/freetier_topic-Always_Free_Resources.htm)
+- [Oracle Cloud sign-up](https://signup.oraclecloud.com/)
+- [OCI Cloud Shell](https://docs.oracle.com/en-us/iaas/Content/API/Concepts/cloudshellintro.htm)
+- [OCI CLI quickstart](https://docs.oracle.com/en-us/iaas/Content/API/SDKDocs/cliinstall.htm)
+
+As of **2026-10-01**, Oracle's current Always Free documentation lists **2 A1 OCPUs / 12 GB RAM** and **200 GB total combined boot + block storage** in the tenancy's home region. The original Bridger reference server was provisioned under Oracle's older entitlement and received **4 OCPUs / 24 GB RAM / 200 GB storage**. Do not assume that older allocation applies to a new account.
+
+For the smoothest beginner experience, open **OCI Cloud Shell** from the Oracle Console. It already includes a pre-authenticated OCI CLI, so there is nothing to install locally just to inspect the account.
+
+Then run Bridger's read-only OCI inspector:
+
+```bash
+curl -fsSLO https://raw.githubusercontent.com/TheSpyglassofOdysseus/bridger/main/scripts/oci/inspect-tenancy.sh
+bash inspect-tenancy.sh
+```
+
+If your AI can safely operate a terminal on your own computer, you can instead install/configure OCI CLI locally. That gives the AI a better path to inspect availability, compose the exact VM launch request, and verify the result. Keep the API signing keys and OCI config private; do not paste them into chat or Git.
+
+Before anything is created, your AI should show you the actual tenancy limits, proposed OCPU/RAM/storage, home region, image, architecture, and expected free/paid status. No paid resource or account upgrade should happen without explicit human approval.
+
+For Oracle-specific capacity and CLI guidance, continue to [beginner/02-oracle-capacity-and-cli.md](beginner/02-oracle-capacity-and-cli.md).
+
 ## 2. Install Bridger
 
 On the server:

@@ -19,15 +19,17 @@ Bridger itself is small. Your applications may not be.
 
 Oracle documents Always Free compute resources in the tenancy's **home region**.
 
-Do **not** hard-code a presumed A1 allowance from this repository. As of 2026-09-30, Oracle's own public documentation is not fully consistent: the Free Tier resource page describes one A1 allowance while Oracle's Arm Compute page describes a larger monthly A1 allowance. Treat the tenancy/console, current account entitlements, and Oracle's current billing view as the authority for what you can actually provision without charge.
+As of **2026-10-01**, Oracle's current Always Free documentation says `VM.Standard.A1.Flex` receives 1,500 OCPU-hours and 9,000 GB-hours per month, equivalent to **2 OCPUs and 12 GB of RAM** for an Always Free tenancy. Oracle also documents **200 GB total of Always Free Block Volume storage**, shared by boot volumes and attached block volumes.
 
-Check both current Oracle references before provisioning:
+Official references:
 
-https://docs.oracle.com/en-us/iaas/Content/FreeTier/freetier_topic-Always_Free_Resources.htm
+- Oracle Free Tier / Always Free: https://docs.oracle.com/en-us/iaas/Content/FreeTier/freetier_topic-Always_Free_Resources.htm
+- Oracle Cloud Free Tier overview: https://docs.oracle.com/en-us/iaas/Content/FreeTier/freetier.htm
+- Oracle Cloud sign-up: https://signup.oraclecloud.com/
 
-https://docs.oracle.com/en-us/iaas/Content/Compute/References/arm.htm
+The original Bridger reference deployment was created under Oracle's **older** A1 entitlement and received **4 OCPUs, 24 GB RAM, and 200 GB storage**. That historical configuration is useful context, but it is **not** the current free entitlement for a new setup.
 
-The original Bridger reference deployment may have a different allocation from what a new tenancy receives today.
+Always inspect the actual tenancy limits, home region, existing usage, and billing view before provisioning. Do not let this repository—or an AI assistant—assume that the author's historical allocation applies to your account.
 
 Oracle's Free Tier documentation also warns that idle Always Free compute instances may be reclaimed under Oracle's published idle-resource criteria. If continuity matters, verify the current reclamation policy and do not treat a free VM as guaranteed permanent capacity.
 
@@ -35,7 +37,7 @@ Oracle's Free Tier documentation also warns that idle Always Free compute instan
 
 `VM.Standard.A1.Flex` uses Ampere Arm processors.
 
-Bridger v0.1 is release-certified on **ARM64 Linux**. x86_64 is an expected portability target, but should be treated as experimental until a clean x86_64 host passes the same release gate.
+Bridger's current public quick-install path is release-tested on **ARM64 Linux**. x86_64 remains an expected portability target, but should be treated as experimental until a clean x86_64 host passes the same release gate.
 
 Before choosing A1, remember that software you later install must support `aarch64/arm64`. Python, Node.js, nginx, Tailscale, and ordinary Linux packages generally have ARM builds, but a third-party binary, container image, browser package, database extension, or vendor agent may not.
 

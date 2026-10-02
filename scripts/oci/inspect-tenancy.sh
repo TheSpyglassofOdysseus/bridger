@@ -48,11 +48,53 @@ printf '\n== Availability domains ==\n'
 oci iam availability-domain list --compartment-id "$TENANCY" --output table
 
 printf '\n== A1 shape visibility ==\n'
+# The JMESPath expression is intentionally single-quoted so its backticks reach OCI unchanged.
+# shellcheck disable=SC2016
 oci compute shape list \
   --compartment-id "$COMPARTMENT" \
   --all \
   --query 'data[?shape==`VM.Standard.A1.Flex`].{Shape:shape,OCPUs:ocpus,MemoryGB:"memory-in-gbs"}' \
   --output table
+
+printf '\n== A1 compute service limits (read-only) ==\n'
+limits_tmp="$(mktemp)"
+trap 'rm -f "$limits_tmp"' EXIT
+if oci limits value list \
+  --compartment-id "$TENANCY" \
+  --service-name compute \
+  --all \
+  --output json >"$limits_tmp" 2>/dev/null; then
+  python3 - "$limits_tmp" <<'PY'
+import json
+import sys
+
+data = json.load(open(sys.argv[1], encoding="utf-8")).get("data", [])
+rows = []
+for item in data:
+    name = str(item.get("name", ""))
+    if "a1" not in name.lower():
+        continue
+    rows.append(
+        (
+            name,
+            item.get("value"),
+            item.get("scope-type"),
+            item.get("availability-domain") or "",
+        )
+    )
+
+if not rows:
+    print("No A1-specific compute limit rows were returned for this tenancy.")
+else:
+    print(f"{'Limit':48} {'Value':>10} {'Scope':>10}  Availability domain")
+    print("-" * 96)
+    for name, value, scope, ad in sorted(rows):
+        print(f"{name:48} {str(value):>10} {str(scope or ''):>10}  {ad}")
+PY
+else
+  echo "Could not read Compute service limits with the current OCI identity/policy."
+  echo "This does not authorize guessing: inspect Limits, Quotas and Usage in the Oracle Console before provisioning."
+fi
 
 printf '\n== Existing compute instances ==\n'
 oci compute instance list \
@@ -64,6 +106,12 @@ oci compute instance list \
 cat <<'EOF'
 
 This script does not create, resize, terminate, or upgrade anything.
-Before launching a VM, verify current Oracle Free Tier documentation and the
-exact requested CPU, memory, storage, architecture, and expected cost.
+
+Published Oracle Always Free baseline checked 2026-10-01:
+  A1 compute: 2 OCPUs / 12 GB RAM
+  Block storage: 200 GB total combined boot + block volumes
+
+Your tenancy limits, home region, existing usage, quotas, capacity, and billing
+view are still authoritative. Before launching a VM, verify the exact requested
+CPU, memory, storage, architecture, and expected free/paid status.
 EOF

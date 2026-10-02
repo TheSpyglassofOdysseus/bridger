@@ -176,12 +176,13 @@ textarea{
       <p class="section-copy">For ChatGPT, the private path is: your server + Bridger MCP + OpenAI Secure MCP Tunnel + your own plugin connection.</p>
       <div class="card" style="margin-top:22px"><h3>Before step 1: check compatibility</h3><p>Make sure your AI account or workspace can create the private MCP/plugin connection you need. OpenAI’s available connection methods and permissions can change independently from Bridger, so verify them before provisioning a server. <a href="https://help.openai.com/en/articles/12584461-developer-mode-and-full-mcp-connectors-in-chatgpt" target="_blank" rel="noopener noreferrer">Check current OpenAI support ↗</a></p></div>
       <div class="grid5">
-        <article class="card"><div class="n">01</div><h3>Get a server</h3><p>Use eligible Oracle free ARM compute when available, or another ARM64 Linux server you control.</p></article>
+        <article class="card"><div class="n">01</div><h3>Get a free server</h3><p>Start with Oracle Always Free A1 when available. Current docs list 2 OCPUs, 12 GB RAM, and 200 GB combined boot/block storage. <a href="https://docs.oracle.com/en-us/iaas/Content/FreeTier/freetier.htm" target="_blank" rel="noopener noreferrer">Oracle Free Tier ↗</a></p></article>
         <article class="card"><div class="n">02</div><h3>Run the installer</h3><p>One script installs Bridger, its private Node runtime, Tailscale, credentials, services, and health checks.</p></article>
         <article class="card"><div class="n">03</div><h3>Create a tunnel</h3><p>The tunnel wizard uses OpenAI’s official client so Bridger stays private with no inbound MCP port.</p></article>
         <article class="card"><div class="n">04</div><h3>Add the plugin</h3><p>In ChatGPT Plugins, choose Tunnel and select the tunnel you created in your own OpenAI account.</p></article>
         <article class="card"><div class="n">05</div><h3>Build & explore</h3><p>Your AI can now help inspect, build, deploy, and maintain projects on the server that stays on.</p></article>
       </div>
+      <div class="card" style="margin-top:18px"><h3>Let the CLI do the Oracle detective work</h3><p>The easiest beginner route is <a href="https://docs.oracle.com/en-us/iaas/Content/API/Concepts/cloudshellintro.htm" target="_blank" rel="noopener noreferrer">OCI Cloud Shell ↗</a>, which already has a pre-authenticated OCI CLI. Or <a href="https://docs.oracle.com/en-us/iaas/Content/API/SDKDocs/cliinstall.htm" target="_blank" rel="noopener noreferrer">install OCI CLI locally ↗</a> so your AI can inspect your tenancy, limits, availability domains, and proposed free VM before anything is created. The original Bridger server received 4 OCPUs / 24 GB / 200 GB under Oracle’s older allowance; new setups must use the current tenancy limits.</p></div>
     </div>
   </section>
 
@@ -204,7 +205,7 @@ textarea{
 Use https://github.com/TheSpyglassofOdysseus/bridger as the source of truth. Start with docs/EASY-SETUP.md and AI_HANDOFF.md. Read SECURITY.md before making consequential changes.
 
 Guide me through the happy path:
-1. get or inspect my ARM64 Linux server;
+1. get or inspect my ARM64 Linux server. If I need one, prefer Oracle Always Free when eligible. Use OCI Cloud Shell or help me install OCI CLI, run scripts/oci/inspect-tenancy.sh first, inspect my real home-region limits/capacity, and show me the exact proposed free VM before creating it. Do not assume the older 4 OCPU / 24 GB reference allocation; Oracle's current published baseline is 2 OCPUs / 12 GB RAM plus 200 GB total combined boot/block storage;
 2. run the Bridger quick installer;
 3. authorize Tailscale;
 4. if I use ChatGPT, run the OpenAI Secure MCP Tunnel wizard;

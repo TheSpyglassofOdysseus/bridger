@@ -31,24 +31,76 @@ Oracle also provides a compute capacity report API/CLI specifically to report ho
 
 https://docs.oracle.com/en-us/iaas/tools/oci-cli/latest/oci_cli_docs/cmdref/compute/compute-capacity-report.html
 
-## Configure OCI CLI
+## Easiest path: Oracle Cloud Shell
 
-Use Oracle's current installation/setup instructions rather than copying an old installer from this repository.
+For a beginner, the fastest way to get a trustworthy OCI CLI is usually **Oracle Cloud Shell**:
 
-After setup, verify:
+https://docs.oracle.com/en-us/iaas/Content/API/Concepts/cloudshellintro.htm
+
+Cloud Shell is available from the Oracle Console, includes the OCI CLI, and is already authenticated for your account. That avoids installing Python packages or creating a local API signing key just to inspect the tenancy.
+
+In Cloud Shell, verify:
 
 ```bash
 oci --version
 oci iam region-subscription list
 ```
 
-Then run the read-only helper:
+Then download/run Bridger's read-only inspector:
 
 ```bash
+curl -fsSLO https://raw.githubusercontent.com/TheSpyglassofOdysseus/bridger/main/scripts/oci/inspect-tenancy.sh
+bash inspect-tenancy.sh
+```
+
+The helper does not create, resize, terminate, or upgrade resources.
+
+## Local OCI CLI: best for deeper AI-driven provisioning
+
+If your AI can safely operate a terminal on your own computer, installing OCI CLI locally can make provisioning much smoother because the AI can inspect the tenancy, compose the exact launch request, and verify the result through the same API Oracle's Console uses.
+
+Oracle's current OCI CLI quickstart:
+
+https://docs.oracle.com/en-us/iaas/Content/API/SDKDocs/cliinstall.htm
+
+After installation, configure authentication with Oracle's supported setup flow, for example:
+
+```bash
+oci setup bootstrap
+```
+
+or:
+
+```bash
+oci setup config
+```
+
+Do not paste OCI private keys, API signing keys, security tokens, or the contents of `~/.oci/config` into chat or Git. The AI only needs access to the CLI in the authorized environment; it does not need the raw credential material in the conversation.
+
+After setup:
+
+```bash
+oci --version
 scripts/oci/inspect-tenancy.sh
 ```
 
-The helper does not launch or resize resources.
+## AI provisioning rule
+
+Before the AI launches anything, it should first show you:
+
+- detected home region;
+- availability domains;
+- current A1 shape visibility;
+- current tenancy/service limits and existing usage;
+- proposed OCPU and RAM;
+- proposed boot/block storage;
+- image and architecture;
+- expected free/paid status under Oracle's **current** documentation;
+- the exact launch command it intends to run.
+
+As of 2026-10-01, Oracle's published Always Free A1 baseline is **2 OCPUs / 12 GB RAM**, with **200 GB total combined boot + block volume storage** in the home region. The original Bridger server used the older **4 OCPU / 24 GB / 200 GB** entitlement; do not use that historical size as the default for a new tenancy.
+
+Only after the human approves the exact free/billing boundary should the AI create the VM.
 
 ## Capacity strategy
 
