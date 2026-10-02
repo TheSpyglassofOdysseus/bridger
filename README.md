@@ -1,6 +1,6 @@
 # Bridger
 
-**Self-hosted, controlled machine access for AI clients — with optional durable Passrail coordination for scheduled work.**
+**Self-hosted, controlled machine access for AI clients — with optional durable [Passrail](https://github.com/TheSpyglassofOdysseus/passrail) coordination for scheduled work.**
 
 ## New here? Build your own personal AI server
 
@@ -37,7 +37,7 @@ AI assistants should read [`AI_HANDOFF.md`](AI_HANDOFF.md) before guiding a depl
 
 Bridger turns a machine you control into a small, auditable machine-execution boundary without depending on a hosted remote-desktop relay. It reuses the upstream Desktop Commander MCP tool surface and keeps the raw machine backend on loopback.
 
-**Start with interactive Bridger.** Passrail is an optional advanced layer for durable/scheduled work; it is not required to give an AI controlled access to your server.
+**Start with interactive Bridger.** [Passrail](docs/PASSRAIL.md) is the optional durable-work layer for scheduled/unattended workflows; it is not required to give an AI controlled access to your server.
 
 Some filenames, service names, environment variables, and headers retain the older `bridge-*` / `X-Bridge-Key` identifiers for compatibility. The product name is Bridger.
 

@@ -65,7 +65,7 @@ Then prove harmless canaries such as reading `/etc/hostname` and running a bound
 
 ## 6. Add Passrail only if you need durable/scheduled work
 
-Passrail is **optional advanced infrastructure**. It adds durable work identity, claims/leases, retry policy, and explicit `UNKNOWN_OUTCOME` handling. It is not required for ordinary interactive AI-to-server work.
+[Passrail](PASSRAIL.md) is **optional durable-work infrastructure**. It adds durable work identity, claims/leases, retry policy, and explicit `UNKNOWN_OUTCOME` handling. It is not required for ordinary interactive AI-to-server work. The standalone public project and installer live at https://github.com/TheSpyglassofOdysseus/passrail.
 
 If you enable it, review [ARCHITECTURE.md](ARCHITECTURE.md) and [THREAT-MODEL.md](THREAT-MODEL.md) before installing the advanced execution-owner/worker pieces.
 
