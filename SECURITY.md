@@ -24,7 +24,7 @@ The interactive core is designed to run on infrastructure the user controls. Opt
 
 ## Deployment rules
 
-- Keep MCP, Actions, Passrail, cloud, tunnel, and AI-client secrets out of Git, logs, screenshots, shell history, and issue/PR comments.
+- Keep MCP, Actions, [Passrail](https://github.com/TheSpyglassofOdysseus/passrail), cloud, tunnel, and AI-client secrets out of Git, logs, screenshots, shell history, and issue/PR comments.
 - Bind the raw MCP runtime to loopback and terminate any required remote authentication/TLS at a controlled edge.
 - Prefer Tailscale or another private network for administration. Public exposure is a separate deliberate decision.
 - Use a dedicated OS account and least-privilege filesystem/process policy appropriate to the host.

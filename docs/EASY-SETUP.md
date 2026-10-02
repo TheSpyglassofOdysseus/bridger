@@ -82,7 +82,7 @@ The installer handles:
 - reboot-enabled services;
 - a safe AI handoff file.
 
-It does **not** create paid resources, buy a domain, open MCP ports publicly, install the advanced Passrail stack, or use anybody else’s AI credentials.
+It does **not** create paid resources, buy a domain, open MCP ports publicly, install the advanced [Passrail](https://github.com/TheSpyglassofOdysseus/passrail) stack, or use anybody else’s AI credentials.
 
 When successful, it ends with:
 

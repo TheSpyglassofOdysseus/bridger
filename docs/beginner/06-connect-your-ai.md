@@ -101,4 +101,4 @@ The handoff intentionally excludes credentials.
 - the tunnel reports ready (when using the ChatGPT tunnel path);
 - you know how to revoke/rotate the remote credential.
 
-A domain and Passrail remain optional.
+A domain and [Passrail](https://github.com/TheSpyglassofOdysseus/passrail) remain optional.
