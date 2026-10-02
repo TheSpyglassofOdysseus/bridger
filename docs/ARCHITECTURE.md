@@ -1,6 +1,6 @@
 # Architecture
 
-Bridger is the authenticated machine-execution boundary. The interactive machine path is the core product. Passrail is an optional durable-coordination layer for scheduled/unattended work. Projects remain authoritative for business/project truth.
+Bridger is the authenticated machine-execution boundary. The interactive machine path is the core product. [Passrail](https://github.com/TheSpyglassofOdysseus/passrail) is an optional durable-coordination layer for scheduled/unattended work. Projects remain authoritative for business/project truth.
 
 ## Interactive core
 

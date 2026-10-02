@@ -8,7 +8,7 @@ Bridger deliberately crosses from AI/client intent into powerful host filesystem
 - The `ubuntu` service account and its effective OS permissions.
 - MCP backend key and legacy interactive `BRIDGE_ACTIONS_KEY`.
 - Narrow `BRIDGE_PASSRAIL_INGRESS_KEY`.
-- Local Passrail claim capabilities and database.
+- Local [Passrail](https://github.com/TheSpyglassofOdysseus/passrail) claim capabilities and database.
 - Local execution-grant HMAC key.
 - Execution-attempt ledger, owner lock, receipts, and project authority evidence.
 - Legacy private GitHub mailbox contents while compatibility mode remains enabled.

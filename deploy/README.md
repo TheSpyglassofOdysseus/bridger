@@ -29,7 +29,7 @@ The product is **Bridger**. Some service filenames, environment variables, and h
 
 ## Advanced / optional units
 
-Passrail execution-owner/worker units and the legacy mailbox adapter support durable/scheduled workflows. They are not required for ordinary interactive Bridger use.
+[Passrail](https://github.com/TheSpyglassofOdysseus/passrail) execution-owner/worker units and the legacy mailbox adapter support durable/scheduled workflows. They are not required for ordinary interactive Bridger use. See [`docs/PASSRAIL.md`](../docs/PASSRAIL.md) for the Bridger integration guide.
 
 The Secure MCP Tunnel unit is client-specific reference material. Use the current official client/provider documentation before installing a tunnel binary or copying a registration flow.
 

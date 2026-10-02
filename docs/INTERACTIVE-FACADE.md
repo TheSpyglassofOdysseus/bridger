@@ -2,7 +2,7 @@
 
 Bridger's interactive facade sits between remote ChatGPT sessions and the local Desktop Commander MCP backend. It exists to keep several simultaneous chats from turning ordinary machine work into hundreds of fine-grained MCP round trips.
 
-The raw Desktop Commander backend remains loopback-only and authoritative for detailed tool schemas. Passrail and the direct execution owner are unchanged.
+The raw Desktop Commander backend remains loopback-only and authoritative for detailed tool schemas. [Passrail](https://github.com/TheSpyglassofOdysseus/passrail) and the direct execution owner are unchanged.
 
 ## Behavior
 

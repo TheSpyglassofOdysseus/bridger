@@ -65,7 +65,7 @@ Cloudflare and Tailscale solve different problems. Cloudflare can provide regist
 
 Bridger's existing runtime architecture remains authoritative. The starter must not create a second machine-control path.
 
-Interactive AI traffic reaches a bounded Bridger facade. Scheduled/unattended work may add [Passrail](PASSRAIL.md), the separate public durable-coordination project. The raw Desktop Commander backend stays on loopback.
+Interactive AI traffic reaches a bounded Bridger facade. Scheduled/unattended work may add [Passrail](https://github.com/TheSpyglassofOdysseus/passrail), the separate public durable-coordination project. Bridger-specific integration notes are in [`PASSRAIL.md`](PASSRAIL.md). The raw Desktop Commander backend stays on loopback.
 
 GitHub may hold code, issues, releases, and review history. A temporary GitHub outage should not stop an already-running server from serving its applications.
 

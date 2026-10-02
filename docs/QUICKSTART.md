@@ -2,7 +2,7 @@
 
 New to server administration or handing this repository to another AI user? Begin with [../START_HERE.md](../START_HERE.md) and [../AI_HANDOFF.md](../AI_HANDOFF.md).
 
-This is the operator-focused reference deployment, not a one-command root installer. The **interactive Bridger path works without Passrail**. Add the durable/scheduled Passrail layer only after the interactive path is healthy.
+This is the operator-focused reference deployment, not a one-command root installer. The **interactive Bridger path works without [Passrail](https://github.com/TheSpyglassofOdysseus/passrail)**. Add the durable/scheduled Passrail layer only after the interactive path is healthy.
 
 ## Prerequisites
 

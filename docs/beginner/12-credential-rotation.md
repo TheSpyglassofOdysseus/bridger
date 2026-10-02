@@ -20,7 +20,7 @@ To rotate it:
 
 If you cannot prove the old credential fails, do not consider the rotation complete.
 
-## Passrail ingress credential
+## [Passrail](https://github.com/TheSpyglassofOdysseus/passrail) ingress credential
 
 If you use the optional durable-work layer, rotate `BRIDGE_PASSRAIL_INGRESS_KEY` separately.
 

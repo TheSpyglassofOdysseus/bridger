@@ -37,7 +37,7 @@ AI assistants should read [`AI_HANDOFF.md`](AI_HANDOFF.md) before guiding a depl
 
 Bridger turns a machine you control into a small, auditable machine-execution boundary without depending on a hosted remote-desktop relay. It reuses the upstream Desktop Commander MCP tool surface and keeps the raw machine backend on loopback.
 
-**Start with interactive Bridger.** [Passrail](docs/PASSRAIL.md) is the optional durable-work layer for scheduled/unattended workflows; it is not required to give an AI controlled access to your server.
+**Start with interactive Bridger.** [Passrail](https://github.com/TheSpyglassofOdysseus/passrail) is the optional durable-work layer for scheduled/unattended workflows; it is not required to give an AI controlled access to your server. Bridger-specific setup notes live in [`docs/PASSRAIL.md`](docs/PASSRAIL.md).
 
 Some filenames, service names, environment variables, and headers retain the older `bridge-*` / `X-Bridge-Key` identifiers for compatibility. The product name is Bridger.
 

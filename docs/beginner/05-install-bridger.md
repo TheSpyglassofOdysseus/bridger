@@ -1,6 +1,6 @@
 # 5. Install Bridger
 
-This chapter gets the **interactive core** running. Passrail is optional advanced infrastructure and is not required here.
+This chapter gets the **interactive core** running. [Passrail](https://github.com/TheSpyglassofOdysseus/passrail) is optional advanced infrastructure and is not required here.
 
 ## What you are installing
 
